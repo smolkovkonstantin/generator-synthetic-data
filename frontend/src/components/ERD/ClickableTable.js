@@ -1,6 +1,6 @@
 import './ClickableTable.css';
 import { useState } from 'react';
-
+import Modal from "./Modal";
 
 function ClickableTable(props) {
     const [showModal, setShowModal] = useState(false);
@@ -31,12 +31,11 @@ function ClickableTable(props) {
                 </tbody>
             </table>
             {showModal && (
-                <div className="modal">
-                    <div className="modal-content">
-                        <span className="close" onClick={handleCloseModal}>&times;</span>
-                        <p>{props.title}</p>
-                    </div>
-                </div>
+                <Modal
+                    title={props.title}
+                    data={props.data}
+                    handleCloseModal={handleCloseModal}
+                />
             )}
         </>
     );
