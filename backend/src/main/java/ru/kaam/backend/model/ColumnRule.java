@@ -1,5 +1,6 @@
 package ru.kaam.backend.model;
 
+
 import jakarta.persistence.*;
 import jakarta.persistence.Column;
 import jakarta.persistence.Table;
@@ -8,21 +9,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @Entity
 @Builder
-@Table(name = "rules")
+@Table(name = "column_rules")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Rule {
+public class ColumnRule {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Long id;
-    private String tableName;
-    private Long numOfEntities;
-    @OneToMany
-    private List<Rule> rules;
+    private String nameOfColumn;
+    private String mask;
 }
