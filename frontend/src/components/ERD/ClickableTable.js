@@ -1,25 +1,44 @@
-function ClickableTable({ data }) {
-    const handleClick = (rowIndex) => {
-        console.log(`Row ${rowIndex} clicked!`);
+import './ClickableTable.css';
+import { useState } from 'react';
+
+
+function ClickableTable(props) {
+    const [showModal, setShowModal] = useState(false);
+
+    const handleClick = () => {
+        setShowModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
     };
 
     return (
-        <table>
-            <thead>
-            <tr>
-                <th>Column 1</th>
-                <th>Column 2</th>
-            </tr>
-            </thead>
-            <tbody>
-            {data.map((row, rowIndex) => (
-                <tr key={rowIndex} onClick={() => handleClick(rowIndex)}>
-                    <td>{row.column1}</td>
-                    <td>{row.column2}</td>
+        <>
+            <table onClick={() => handleClick()}>
+                <thead>
+                <tr>
+                    <th colSpan="2">{props.title}</th>
                 </tr>
-            ))}
-            </tbody>
-        </table>
+                </thead>
+                <tbody id="table-content">
+                {props.data.map((row, rowIndex) => (
+                    <tr key={rowIndex}>
+                        <td>{row.column1}</td>
+                        <td>{row.column2}</td>
+                    </tr>
+                ))}
+                </tbody>
+            </table>
+            {showModal && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <span className="close" onClick={handleCloseModal}>&times;</span>
+                        <p>{props.title}</p>
+                    </div>
+                </div>
+            )}
+        </>
     );
 }
 

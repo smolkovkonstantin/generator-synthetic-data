@@ -1,24 +1,190 @@
+import "./ERD.css"
 import ClickableTable from "./ClickableTable";
+import {tab} from "@testing-library/user-event/dist/tab";
 
 function ERD() {
 
-    const data = [
+    const tables = [
         {
-            column1: 'Row 1, Column 1',
-            column2: 'Row 1, Column 2',
+            title: 'Table 1',
+            data: [
+                {
+                    column1: 'id',
+                    column2: 'integer',
+                },
+                {
+                    column1: 'name',
+                    column2: 'Alex',
+                },
+                {
+                    column1: 'phone',
+                    column2: '88005553535',
+                },
+            ],
         },
         {
-            column1: 'Row 2, Column 1',
-            column2: 'Row 2, Column 2',
+            title: 'Table 2',
+            data: [
+                {
+                    column1: 'id',
+                    column2: 'integer',
+                },
+                {
+                    column1: 'name',
+                    column2: 'Alex',
+                },
+                {
+                    column1: 'phone',
+                    column2: '88005553535',
+                },
+            ],
         },
         {
-            column1: 'Row 3, Column 1',
-            column2: 'Row 3, Column 2',
+            title: 'Table 3',
+            data: [
+                {
+                    column1: 'id',
+                    column2: 'integer',
+                },
+                {
+                    column1: 'name',
+                    column2: 'Alex',
+                },
+                {
+                    column1: 'phone',
+                    column2: '88005553535',
+                },
+            ],
+        },
+        {
+            title: 'Table 4',
+            data: [
+                {
+                    column1: 'id',
+                    column2: 'integer',
+                },
+                {
+                    column1: 'name',
+                    column2: 'Alex',
+                },
+                {
+                    column1: 'phone',
+                    column2: '88005553535',
+                },
+            ],
+        },
+        {
+            title: 'Table 5',
+            data: [
+                {
+                    column1: 'id',
+                    column2: 'integer',
+                },
+                {
+                    column1: 'name',
+                    column2: 'Alex',
+                },
+                {
+                    column1: 'phone',
+                    column2: '88005553535',
+                },
+            ],
+        },
+        {
+            title: 'Table 1',
+            data: [
+                {
+                    column1: 'id',
+                    column2: 'integer',
+                },
+                {
+                    column1: 'name',
+                    column2: 'Alex',
+                },
+                {
+                    column1: 'phone',
+                    column2: '88005553535',
+                },
+            ],
+        },
+        {
+            title: 'Table 2',
+            data: [
+                {
+                    column1: 'id',
+                    column2: 'integer',
+                },
+                {
+                    column1: 'name',
+                    column2: 'Alex',
+                },
+                {
+                    column1: 'phone',
+                    column2: '88005553535',
+                },
+            ],
+        },
+        {
+            title: 'Table 3',
+            data: [
+                {
+                    column1: 'id',
+                    column2: 'integer',
+                },
+                {
+                    column1: 'name',
+                    column2: 'Alex',
+                },
+                {
+                    column1: 'phone',
+                    column2: '88005553535',
+                },
+            ],
+        },
+        {
+            title: 'Table 4',
+            data: [
+                {
+                    column1: 'id',
+                    column2: 'integer',
+                },
+                {
+                    column1: 'name',
+                    column2: 'Alex',
+                },
+                {
+                    column1: 'phone',
+                    column2: '88005553535',
+                },
+            ],
+        },
+        {
+            title: 'Table 5',
+            data: [
+                {
+                    column1: 'id',
+                    column2: 'integer',
+                },
+                {
+                    column1: 'name',
+                    column2: 'Alex',
+                },
+                {
+                    column1: 'phone',
+                    column2: '88005553535',
+                },
+            ],
         },
     ];
 
     return (
-        <ClickableTable data={data} />
+        <div className="table-container">
+            {tables.map((table, index) => (
+                <div key={index}>
+                    <ClickableTable data={table.data} title={table.title} />
+                </div>
+            ))}
+        </div>
     );
 }
 

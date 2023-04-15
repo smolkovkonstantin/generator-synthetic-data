@@ -1,0 +1,15 @@
+.Logo{
+    display: grid;
+    align-items: center;
+    margin: 20px;
+    text-align: left;
+    column-gap: 5px;
+    font-family: Fantasy;
+    font-size: 40px;
+    grid-template-columns: 1fr 20fr;
+}
+
+.App-logo{
+    width: 100px;
+    height: auto;
+}
