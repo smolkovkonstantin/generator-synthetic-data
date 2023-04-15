@@ -9,6 +9,6 @@ import java.util.List;
 @Builder
 public class Table {
     private String name;
+    private String type;
     private List<Column> columns;
-    private List<PrimaryKeyColumn> primaryKeyColumns;
 }
