@@ -5,7 +5,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.kaam.backend.dto.RuleDTO;
+import ru.kaam.backend.model.Rule;
 import ru.kaam.backend.service.RuleService;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/rule")
@@ -15,13 +18,16 @@ public class RuleController {
     private final RuleService ruleService;
 
     @PostMapping("/add")
-    public ResponseEntity<?> addRule(@RequestBody RuleDTO ruleDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    public ResponseEntity<Rule> addRule(@RequestBody RuleDTO ruleDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(ruleService.addRule(ruleDTO));
     }
 
-    @GetMapping("/get")
-    public ResponseEntity<?> getRule() {
-        return ResponseEntity.ok().build();
+    @GetMapping("/get/{ruleId}")
+    public ResponseEntity<Rule> getRule(@PathVariable("ruleId") Long id) {
+        Optional<Rule> foundRule = ruleService.getRule(id);
+
+        return foundRule.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
+
 
 }

@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 import ru.kaam.backend.model.Column;
 import ru.kaam.backend.model.Scheme;
 import ru.kaam.backend.model.Table;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@Slf4j
+@Validated
 public class SchemeServiceImpl implements SchemeService {
 
     private final Connection connection;

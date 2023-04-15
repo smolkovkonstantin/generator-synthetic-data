@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.kaam.backend.model.Scheme;
+import ru.kaam.backend.model.Table;
 import ru.kaam.backend.service.SchemeService;
 
 import java.sql.SQLException;
@@ -18,12 +20,12 @@ public class SchemeController {
     private final SchemeService schemeService;
 
     @GetMapping("/get")
-    public ResponseEntity<?> getScheme() throws SQLException {
+    public ResponseEntity<Scheme> getScheme() throws SQLException {
         return ResponseEntity.ok(schemeService.getScheme());
     }
 
     @GetMapping("/get/table/{table_name}")
-    public ResponseEntity<?> getTable(@PathVariable("table_name") String tableName) throws SQLException {
+    public ResponseEntity<Table> getTable(@PathVariable("table_name") String tableName) throws SQLException {
         return ResponseEntity.ok(schemeService.getTable(tableName));
     }
 }
