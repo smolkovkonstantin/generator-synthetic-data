@@ -1,5 +1,6 @@
-function sendRequest(method, url, body=null) {
+function postRequest(url, body=null) {
     /* sends a POST request to generate data */
+    const method = "POST"
     const headers = {
         'Cpntent-Type': "application/json"
     }
@@ -21,14 +22,4 @@ function sendRequest(method, url, body=null) {
 
     })
 }
-function getRequest(url){
-    /* gets data that we need for tables in the DB*/
-    return fetch(url).then(responce => {return responce.json()})
-}
-// const RequestUrl = "https://jsonplaceholder.typicode.com/users"
-// getRequest(RequestUrl)
-//     .then(data => console.log(data))
-//     .catch(err => console.log(err))
-
-export default sendRequest;
-export default getRequest;
+export default postRequest;
