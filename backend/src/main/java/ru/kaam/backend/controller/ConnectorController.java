@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.kaam.backend.dto.ConnectorDTO;
 import ru.kaam.backend.service.ConnectorService;
 
+
 @RestController
 @RequiredArgsConstructor
 public class ConnectorController {

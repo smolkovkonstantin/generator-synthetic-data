@@ -1,4 +1,11 @@
 package ru.kaam.backend.dto;
 
-public record RuleDTO() {
+import ru.kaam.backend.model.Rule;
+
+import java.util.List;
+
+public record RuleDTO(
+        Long numOfEntities,
+        String tableName,
+        List<Rule> rules) {
 }
