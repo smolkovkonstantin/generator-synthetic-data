@@ -1,12 +1,14 @@
 package ru.kaam.backend.service.impl;
 
 import jakarta.validation.constraints.NotBlank;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.kaam.backend.model.Column;
 import ru.kaam.backend.model.Scheme;
 import ru.kaam.backend.model.Table;
 import ru.kaam.backend.service.SchemeService;
 
+import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,9 +17,17 @@ import java.util.List;
 
 @Service
 public class SchemeServiceImpl implements SchemeService {
+
+    private Connection connection;
+
+    @Autowired
+    public SchemeServiceImpl(Connection connection) {
+        this.connection = connection;
+    }
+
     @Override
     public Scheme getScheme() throws SQLException {
-        DatabaseMetaData databaseMetaData = null;
+        DatabaseMetaData databaseMetaData = connection.getMetaData();
         return Scheme.builder()
                 .name("Test")
                 .tables(setTables(databaseMetaData))
@@ -26,7 +36,7 @@ public class SchemeServiceImpl implements SchemeService {
 
     @Override
     public Table getTable(@NotBlank String tableName) throws SQLException {
-        DatabaseMetaData databaseMetaData = null;
+        DatabaseMetaData databaseMetaData = connection.getMetaData();
         ResultSet foundColumns = databaseMetaData.getColumns(null, null, tableName, null);
 
         return Table.builder()
