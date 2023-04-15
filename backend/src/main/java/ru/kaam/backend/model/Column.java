@@ -11,4 +11,8 @@ public class Column {
     private Integer size;
     private Boolean isNullable;
     private Boolean isAutoIncrement;
+    private Boolean isGeneratedColumn;
+    private Boolean isPrimaryKey;
+    private Boolean isImportedForeignKey;
+    private Boolean isExportedForeignKey;
 }
