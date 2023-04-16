@@ -3,10 +3,11 @@ import { useState } from 'react';
 import Modal from "./Modal";
 
 function ClickableTable(props) {
+
     const [showModal, setShowModal] = useState(false);
 
     const handleClick = () => {
-        setShowModal(true);
+        setShowModal(true)
     };
 
     const handleCloseModal = () => {
@@ -15,7 +16,7 @@ function ClickableTable(props) {
 
     return (
         <>
-            <table onClick={() => handleClick()}>
+            <table onClick={handleClick}>
                 <thead>
                 <tr>
                     <th colSpan="2">{props.title}</th>

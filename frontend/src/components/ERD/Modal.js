@@ -1,4 +1,5 @@
 import React from 'react';
+import "./Modal.css"
 
 function Modal(props) {
     const handleSaveClick = () => {
@@ -7,8 +8,10 @@ function Modal(props) {
         props.data.forEach((row, rowIndex) => {
             const input_reg = document.getElementById(`input-${rowIndex}-reg`).value;
             const input_num = document.getElementById(`input-${rowIndex}-num`).value;
-            data[row.column1] = {"regexp": input_reg, "number_of_characters":input_num};
+            data[row.column1] = {"regexp": input_reg, "number_of_characters": input_num};
         });
+
+        data['number_of_rows'] = document.getElementById(`number-of-rows-input`).value;
 
         const json = JSON.stringify(data);
         const blob = new Blob([json], {type: 'application/json'});
@@ -61,7 +64,16 @@ function Modal(props) {
                     ))}
                     </tbody>
                 </table>
+                <div className="modal-footer">
+                    <div className="input-container">
+                        <label htmlFor="number-of-rows-input">Number of rows:</label>
+                        <input
+                            id="number-of-rows-input"
+                            type="number"
+                        />
+                    </div>
                 <button onClick={handleSaveClick}>Save</button>
+            </div>
             </div>
         </div>
     );

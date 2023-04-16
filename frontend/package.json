@@ -19,6 +19,7 @@
     "react-flow-renderer": "^10.3.17",
     "react-modal": "^3.16.1",
     "react-scripts": "5.0.1",
+    "reactflow": "^11.7.0",
     "storm-react-diagrams": "^5.2.1",
     "web-vitals": "^2.1.4"
   },
