@@ -5,6 +5,9 @@ import lombok.Data;
 
 import java.util.List;
 
+/**
+ * Класс описания метаданных таблицы БД
+ */
 @Data
 @Builder
 public class Table {
