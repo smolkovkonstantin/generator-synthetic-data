@@ -1,14 +1,26 @@
 import React, {useState} from 'react';
 import './Authorization.css';
 import Header from "./Header";
-import { saveAs } from 'file-saver';
+import ReactDOM from "react-dom/client";
+import App from "../../App";
 
 function Authorization() {
+    function getRequest(url){
+        /* gets data that we need for tables in the DB*/
+        return fetch(url).then(responce => {
+            if (responce.ok){
+                const root = ReactDOM.createRoot(document.getElementById('root'));
+                root.render(
+                    <App />
+                )
+            }
+        })
+    }
     function postRequest(url, body=null) {
         /* sends a POST request to generate data */
         const method = "POST"
         const headers = {
-            'Cpntent-Type': "application/json"
+            'Content-Type': "application/json"
         }
         return fetch(url, {
             method: method,
@@ -16,7 +28,7 @@ function Authorization() {
             headers: headers
         }).then(responce => {
             if (responce.ok) {
-                return responce.json()
+                return getRequest("http://localhost:8080/scheme/get")
             }
 
             return responce.json().then(
