@@ -15,26 +15,41 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Сервис для генерации случайных данных
+ */
+
 @Service
 @RequiredArgsConstructor
 public class GeneratorServiceImpl implements GeneratorService {
 
     private final ApplicationContext context;
 
+    /**
+     * Герерация случайных данных на основе правил переданных
+     * Данные сразу сохраняются в базу данных
+     * @param ruleDTO - передеанные правила генерации, содержащий информацию о названии таблицы,
+     *                названии колонок, а также маску, заданнуюпользователем
+     */
     @Override
-    public Object generate(RuleDTO ruleDTO) {
+    public void generate(RuleDTO ruleDTO) throws SQLException {
 
         Connection connection = (Connection) context.getBean("connection");
 
-        try (Statement statement = connection.createStatement()) {
+        Statement statement = connection.createStatement();
             for (long i = 0; i < ruleDTO.numOfEntities(); i++) {
                 statement.execute(generateInsertQuery(ruleDTO.tableName(), ruleDTO.rules()));
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return null;
     }
+
+
+    /**
+     * Построение запроса insert для любой переданной колонки
+     * @param tableName - название таблицы
+     * @param columnRule - колонки и маски для генерации данных
+     * @return сткрока для исполнения запроса insert
+     * @throws SQLException
+     */
 
     public static String generateInsertQuery(String tableName, List<ColumnRule> columnRule) throws SQLException {
         // Создаем SQL-запрос на основе переданных названий столбцов и значений
@@ -71,6 +86,10 @@ public class GeneratorServiceImpl implements GeneratorService {
         return sb.toString().replaceAll("ь", "?").replaceAll("ъ", "#");
     }
 
+
+    /**
+     * Парсинг маски для случаев, когда mask содержит [number] - повторение, \? и \# - экранироваение
+     */
     private static String parseMask(String mask) {
         StringBuilder stringBuilder = new StringBuilder();
         StringBuilder multiplier = new StringBuilder("1");
