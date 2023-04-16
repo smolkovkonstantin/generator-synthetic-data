@@ -21,14 +21,6 @@ public class GeneratorController {
 
     private final GeneratorService generatorService;
 
-    @ApiResponse(
-            responseCode = "200",
-            description = "Синтетические данные сгенерированы"
-    )
-    @ApiResponse(
-            responseCode = "400",
-            description = "Правила указаны неверно"
-    )
     @PostMapping
     public void generateData(@RequestBody RuleDTO ruleDTO) throws SQLException {
         generatorService.generate(ruleDTO);

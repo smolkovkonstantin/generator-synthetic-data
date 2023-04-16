@@ -24,45 +24,12 @@ public class RuleController {
 
     private final RuleService ruleService;
 
-    @Operation(summary = "Добавление правила")
-    @ApiResponse(
-            responseCode = "201",
-            description = "Правило сохранено",
-            content = {
-                    @Content(
-                            mediaType = "application/json",
-                            schema = @Schema(
-                                    implementation = Rule.class
-                            )
-                    )})
-    @ApiResponse(
-            responseCode = "400",
-            description = "Правило введено неверно"
-    )
     @PostMapping()
     public ResponseEntity<Rule> addRule(@RequestBody RuleDTO ruleDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(ruleService.addRule(ruleDTO));
     }
 
-    @Operation(summary = "Получение правила")
-    @ApiResponse(
-            responseCode = "200",
-            description = "Правило получено",
-            content = {
-                    @Content(
-                            mediaType = "application/json",
-                            schema = @Schema(
-                                    implementation = Rule.class
-                            )
-                    )})
-    @ApiResponse(
-            responseCode = "404",
-            description = "Правило не найдено"
-    )
-    @ApiResponse(
-            responseCode = "400",
-            description = "Параметр ruleId < 0 или null"
-    )
+
     @GetMapping("/{ruleId}")
     public ResponseEntity<Rule> getRule(@PathVariable("ruleId") Long id) {
         Optional<Rule> foundRule = ruleService.getRule(id);
