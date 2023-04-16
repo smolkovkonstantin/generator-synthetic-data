@@ -3,6 +3,8 @@ package ru.kaam.backend.service.impl;
 import jakarta.validation.constraints.NotBlank;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import ru.kaam.backend.model.Column;
@@ -18,15 +20,18 @@ import java.util.List;
 @Validated
 public class SchemeServiceImpl implements SchemeService {
 
-    private final Connection connection;
+    private final ApplicationContext context;
 
     @Autowired
-    public SchemeServiceImpl(Connection connection) {
-        this.connection = connection;
+    public SchemeServiceImpl(ApplicationContext context) {
+        this.context = context;
     }
 
     @Override
     public Scheme getScheme() throws SQLException {
+
+        Connection connection = (Connection) context.getBean("connection");
+
         DatabaseMetaData databaseMetaData = connection.getMetaData();
         return Scheme.builder()
                 .name("Test")
@@ -36,6 +41,7 @@ public class SchemeServiceImpl implements SchemeService {
 
     @Override
     public Table getTable(@NotBlank String tableName) throws SQLException {
+        Connection connection = (Connection) context.getBean("connection");
         DatabaseMetaData databaseMetaData = connection.getMetaData();
 
         return Table.builder()
@@ -75,10 +81,12 @@ public class SchemeServiceImpl implements SchemeService {
         ResultSet foundExportedKeys = databaseMetaData.getExportedKeys(null, null, tableName);
         ResultSet foundColumns = databaseMetaData.getColumns(null, null, tableName, null);
 
+        boolean isPrimaryKey = false;
+        boolean isImportedForeignKey = false;
+        boolean isExportedForeignKey = false;
+
         while (foundColumns.next()) {
-            Boolean isPrimaryKey = false;
-            Boolean isImportedForeignKey = false;
-            Boolean isExportedForeignKey = false;
+
 
             String columnName = foundColumns.getString("COLUMN_NAME");
             String columnSize = foundColumns.getString("COLUMN_SIZE");

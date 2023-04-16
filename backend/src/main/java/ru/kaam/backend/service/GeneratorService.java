@@ -1,8 +1,8 @@
 package ru.kaam.backend.service;
 
-import ru.kaam.backend.dto.GeneratorDTO;
+import ru.kaam.backend.dto.RuleDTO;
 
 public interface GeneratorService {
 
-    Object generate(GeneratorDTO generatorDTO);
+    Object generate(RuleDTO ruleDTO);
 }
