@@ -2,7 +2,9 @@ package ru.kaam.backend.service;
 
 import ru.kaam.backend.dto.RuleDTO;
 
+import java.sql.SQLException;
+
 public interface GeneratorService {
 
-    Object generate(RuleDTO ruleDTO);
+    void generate(RuleDTO ruleDTO) throws SQLException;
 }
