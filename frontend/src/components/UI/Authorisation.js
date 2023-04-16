@@ -16,16 +16,12 @@ function Authorization() {
             }
         })
     }
-    function postRequest(url, body=null) {
+    function postRequest(url, body) {
         /* sends a POST request to generate data */
         const method = "POST"
-        const headers = {
-            'Content-Type': "application/json"
-        }
         return fetch(url, {
             method: method,
-            body: JSON.stringify(body),
-            headers: headers
+            body: body
         }).then(responce => {
             if (responce.ok) {
                 return getRequest("http://localhost:8080/scheme/get")
@@ -44,12 +40,12 @@ function Authorization() {
         let password = document.getElementById("password").value
         let username = document.getElementById("username").value
         let url = document.getElementById("url").value
-        const json = {
-            password: password,
-            userName: username,
-            url: url
+        const body = {
+            "password": password,
+            "userName": username,
+            "url": url
         }
-        const myjson = JSON.stringify(json)
+        const myjson = JSON.stringify(body)
         postRequest("http://localhost:8080/connect", myjson)
     };
     return (
