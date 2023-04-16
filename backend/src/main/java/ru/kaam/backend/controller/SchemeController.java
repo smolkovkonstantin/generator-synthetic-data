@@ -16,6 +16,9 @@ import ru.kaam.backend.service.SchemeService;
 
 import java.sql.SQLException;
 
+/**
+ * End points для работы со схемой БД.
+ */
 @RestController
 @RequestMapping("/scheme")
 @RequiredArgsConstructor

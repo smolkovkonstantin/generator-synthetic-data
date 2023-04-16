@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.kaam.backend.dto.ConnectorDTO;
 import ru.kaam.backend.service.ConnectorService;
 
-
+/**
+ * End points для подключения к базе данных.
+ */
 @RestController
 @RequiredArgsConstructor
 public class ConnectorController {

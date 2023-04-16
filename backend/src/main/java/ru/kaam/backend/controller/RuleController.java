@@ -14,6 +14,9 @@ import ru.kaam.backend.service.RuleService;
 
 import java.util.Optional;
 
+/**
+ * End points для работы с правилами генерации данных.
+ */
 @RestController
 @RequestMapping("/rule")
 @RequiredArgsConstructor
