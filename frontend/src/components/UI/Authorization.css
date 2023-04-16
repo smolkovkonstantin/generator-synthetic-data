@@ -1,0 +1,49 @@
+.authorization-container {
+    margin-top: 10%;
+    background-color: lightblue;
+    font-family: Arial, sans-serif;
+}
+
+.authorization-heading {
+    text-align: center;
+    color: #333333;
+}
+
+.authorization-form {
+    background-color: #FFFFFF;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
+}
+
+.authorization-form label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #666666;
+}
+
+.authorization-form input[type="text"],
+.authorization-form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.authorization-form input[type="submit"] {
+    background-color: purple;
+    color: #FFFFFF;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.authorization-form input[type="submit"]:hover {
+    background-color: darkmagenta;
+}
