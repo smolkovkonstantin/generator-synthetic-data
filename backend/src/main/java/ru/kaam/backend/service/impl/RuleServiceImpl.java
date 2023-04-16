@@ -33,7 +33,8 @@ public class RuleServiceImpl implements RuleService {
     private Rule convertToEntity(RuleDTO ruleDTO) {
         return Rule.builder()
                 .numOfEntities(ruleDTO.numOfEntities())
-                .mask(ruleDTO.mask())
+                .tableName(ruleDTO.tableName())
+                .rules(ruleDTO.rules())
                 .build();
     }
 }

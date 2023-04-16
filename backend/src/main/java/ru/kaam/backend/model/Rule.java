@@ -24,5 +24,5 @@ public class Rule {
     private String tableName;
     private Long numOfEntities;
     @OneToMany
-    private List<Rule> rules;
+    private List<ColumnRule> rules;
 }
