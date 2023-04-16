@@ -4,7 +4,6 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import ru.kaam.backend.model.Column;
@@ -18,6 +17,7 @@ import java.util.List;
 
 @Service
 @Validated
+@Slf4j
 public class SchemeServiceImpl implements SchemeService {
 
     private final ApplicationContext context;
@@ -59,12 +59,33 @@ public class SchemeServiceImpl implements SchemeService {
             String tableName = foundTables.getString("TABLE_NAME");
 
             if (tableType.equals("TABLE")) {
+
+                ResultSet foundImportedKeys = databaseMetaData.getImportedKeys(null, null, tableName);
+                List<String> foreignKeys = new ArrayList<>();
+                List<String> primaryKeyForeignTables = new ArrayList<>();
+
+                while (foundImportedKeys.next()) {
+                    String primaryKeyForeignTable;
+                    String foreignKey;
+
+                    foreignKey = foundImportedKeys.getString("FKCOLUMN_NAME");
+                    primaryKeyForeignTable = foundImportedKeys.getString("PKCOLUMN_NAME");
+                    if (!foreignKey.isEmpty()) {
+                        foreignKeys.add(foreignKey);
+                    }
+                    if (!primaryKeyForeignTable.isEmpty()) {
+                        primaryKeyForeignTables.add(tableName);
+                    }
+                }
+
                 List<Column> columns = setColumns(databaseMetaData, tableName);
 
                 Table table = Table.builder()
                         .name(foundTables.getString("TABLE_NAME"))
                         .type(tableType)
                         .columns(columns)
+                        .primaryKeyForeignTables(primaryKeyForeignTables)
+                        .foreignKeys(foreignKeys)
                         .build();
 
                 tables.add(table);
@@ -77,13 +98,9 @@ public class SchemeServiceImpl implements SchemeService {
     private List<Column> setColumns(DatabaseMetaData databaseMetaData, String tableName) throws SQLException {
         List<Column> columns = new ArrayList<>();
         ResultSet foundPrimaryKeys = databaseMetaData.getPrimaryKeys(null, null, tableName);
-        ResultSet foundImportedKeys = databaseMetaData.getImportedKeys(null, null, tableName);
-        ResultSet foundExportedKeys = databaseMetaData.getExportedKeys(null, null, tableName);
         ResultSet foundColumns = databaseMetaData.getColumns(null, null, tableName, null);
 
         boolean isPrimaryKey = false;
-        boolean isImportedForeignKey = false;
-        boolean isExportedForeignKey = false;
 
         while (foundColumns.next()) {
 
@@ -101,18 +118,6 @@ public class SchemeServiceImpl implements SchemeService {
                 }
             }
 
-            while (foundImportedKeys.next()) {
-                if (foundImportedKeys.getString("FKCOLUMN_NAME").equals(columnName)) {
-                    isImportedForeignKey = true;
-                }
-            }
-
-            while (foundExportedKeys.next()) {
-                if (foundExportedKeys.getString("FKCOLUMN_NAME").equals(columnName)) {
-                    isExportedForeignKey = true;
-                }
-            }
-
             Column column = Column.builder()
                     .name(columnName)
                     .size(Integer.parseInt(columnSize))
@@ -121,8 +126,6 @@ public class SchemeServiceImpl implements SchemeService {
                     .isAutoIncrement(Boolean.parseBoolean(isAutoIncrement))
                     .isGeneratedColumn(Boolean.parseBoolean(isGeneratedColumn))
                     .isPrimaryKey(isPrimaryKey)
-                    .isImportedForeignKey(isImportedForeignKey)
-                    .isExportedForeignKey(isExportedForeignKey)
                     .build();
             columns.add(column);
         }

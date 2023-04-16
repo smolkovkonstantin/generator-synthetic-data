@@ -11,4 +11,6 @@ public class Table {
     private String name;
     private String type;
     private List<Column> columns;
+    private List<String> primaryKeyForeignTables;
+    private List<String> foreignKeys;
 }
