@@ -5,6 +5,9 @@ import lombok.Data;
 
 import java.util.List;
 
+/**
+ * Класс описания метаданных схемы БД
+ */
 @Data
 @Builder
 public class Scheme {

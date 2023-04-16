@@ -1,5 +1,6 @@
 package ru.kaam.backend.controller;
 
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,14 @@ public class ConnectorController {
 
     private final ConnectorService connectorService;
 
+    @ApiResponse(
+            responseCode = "200",
+            description = "Соединение с БД установлено"
+    )
+    @ApiResponse(
+            responseCode = "404",
+            description = "Соединение с БД не установлено"
+    )
     @PostMapping("/connect")
     public ResponseEntity<?> setConnector(@RequestBody ConnectorDTO connectorDTO) {
         try {

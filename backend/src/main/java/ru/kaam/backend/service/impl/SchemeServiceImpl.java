@@ -1,10 +1,8 @@
 package ru.kaam.backend.service.impl;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import ru.kaam.backend.model.Column;
@@ -16,6 +14,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Сервис для получения метаданных о базе данных.
+ */
 @Service
 @Validated
 public class SchemeServiceImpl implements SchemeService {
@@ -27,6 +28,10 @@ public class SchemeServiceImpl implements SchemeService {
         this.context = context;
     }
 
+    /**
+     * Получение логической схемы БД
+     * @return Scheme - логическая модель БД
+     */
     @Override
     public Scheme getScheme() throws SQLException {
 
@@ -39,6 +44,10 @@ public class SchemeServiceImpl implements SchemeService {
                 .build();
     }
 
+    /**
+     * Получение таблицы БД
+     * @return Table - модель таблицы БД
+     */
     @Override
     public Table getTable(@NotBlank String tableName) throws SQLException {
         Connection connection = (Connection) context.getBean("connection");
@@ -50,8 +59,12 @@ public class SchemeServiceImpl implements SchemeService {
                 .build();
     }
 
+    /**
+     * Формирование списка метаданных таблиц
+     */
     private List<Table> setTables(DatabaseMetaData databaseMetaData) throws SQLException {
         List<Table> tables = new ArrayList<>();
+
         ResultSet foundTables = databaseMetaData.getTables(null, "public", null, null);
 
         while (foundTables.next()) {
@@ -74,6 +87,9 @@ public class SchemeServiceImpl implements SchemeService {
         return tables;
     }
 
+    /**
+     * Формирование списка метаданных о колонках таблицы
+     */
     private List<Column> setColumns(DatabaseMetaData databaseMetaData, String tableName) throws SQLException {
         List<Column> columns = new ArrayList<>();
         ResultSet foundPrimaryKeys = databaseMetaData.getPrimaryKeys(null, null, tableName);
